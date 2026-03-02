@@ -12,6 +12,12 @@ y = df['label'].values
 
 X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2)
 
+#Need to scale data as KNN is distance based
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
 def euclidean_distance(p,q):
     return np.sqrt(np.sum((p-q)**2))
 
@@ -57,8 +63,8 @@ model = KNeighborsClassifier(n_neighbors=3)
 model.fit(X_train,y_train)
 y_pred = model.predict(X_test)
 
-#plt.scatter(range(len(y_test)), y_test,color='black')
+plt.scatter(range(len(y_test)), y_test,color='black')
 plt.scatter(range(len(y_pred_scratch)), y_pred_scratch,color='red')
-#plt.scatter(range(len(y_pred)),y_pred,color='green')
+plt.scatter(range(len(y_pred)),y_pred,color='green')
 plt.legend()
 plt.show()
